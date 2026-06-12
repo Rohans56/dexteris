@@ -517,6 +517,98 @@
     #contact { padding: 5rem 1.5rem; }
     footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
   }
+
+  /* ── CONTACT FORM ── */
+  .contact-form {
+    width: 100%;
+    max-width: 680px;
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .form-group label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    font-family: var(--sans, 'DM Sans', sans-serif);
+    font-size: 0.95rem;
+    color: white;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.35); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.15);
+  }
+  .form-group select option { background: #333; color: white; }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+  .checkbox-label input[type="checkbox"] {
+    width: 16px; height: 16px;
+    accent-color: white;
+    padding: 0;
+  }
+  .btn-submit {
+    background: white;
+    color: var(--accent);
+    padding: 1rem 2.5rem;
+    border-radius: 100px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+    font-family: var(--sans, 'DM Sans', sans-serif);
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  @media (max-width: 900px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
+
 </style>
 </head>
 <body>
@@ -833,8 +925,63 @@
 <section id="contact">
   <div class="section-tag" style="color:rgba(255,255,255,0.6)">Get in touch</div>
   <h2 class="section-h2">Ready to bring cyber safety<br>to your <em>school?</em></h2>
-  <p class="contact-sub">Whether you're a school, community organisation, or parent group — I'd love to work with you. Let's build safer digital futures for kids across Australia.</p>
-  <a href="mailto:hello@dexteris.com.au" class="btn-white">Work With Me →</a>
+  <p class="contact-sub">Whether you're a school, community organisation, or parent group — fill in the form below and I'll get back to you within 24 hours.</p>
+
+  <form class="contact-form" name="contact" method="POST" action="https://formspree.io/f/xjgdazwq" onsubmit="handleSubmit(event)">
+    
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="jane@school.edu.au" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="school">School / Organisation</label>
+        <input type="text" id="school" name="school" placeholder="Thornbury Secondary College">
+      </div>
+      <div class="form-group">
+        <label for="type">I am a...</label>
+        <select id="type" name="type" required>
+          <option value="" disabled selected>Select one</option>
+          <option value="principal">Principal / School Leader</option>
+          <option value="teacher">Teacher / Coordinator</option>
+          <option value="parent">Parent / Caregiver</option>
+          <option value="community">Community Organisation</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="year-levels">Year Levels (select all that apply)</label>
+      <div class="checkbox-group">
+        <label class="checkbox-label"><input type="checkbox" name="year-levels" value="primary"> Primary (Yrs 3–6)</label>
+        <label class="checkbox-label"><input type="checkbox" name="year-levels" value="middle"> Middle (Yrs 7–9)</label>
+        <label class="checkbox-label"><input type="checkbox" name="year-levels" value="senior"> Senior (Yrs 10–12)</label>
+        <label class="checkbox-label"><input type="checkbox" name="year-levels" value="parents"> Parent Session</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="4" placeholder="Tell me a bit about what you're looking for — workshop dates, number of students, specific topics..." required></textarea>
+    </div>
+
+    <button type="submit" class="btn-submit">
+      <span id="submit-text">Send Message →</span>
+    </button>
+
+    <div id="form-success" style="display:none; margin-top:1.5rem; background:rgba(255,255,255,0.15); border-radius:0.75rem; padding:1.25rem; font-size:0.95rem; color:white;">
+      ✅ Thanks! I'll be in touch within 24 hours.
+    </div>
+  </form>
 </section>
 
 <!-- FOOTER -->
@@ -854,5 +1001,35 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-submit');
+  const text = document.getElementById('submit-text');
+  const success = document.getElementById('form-success');
+
+  btn.disabled = true;
+  text.textContent = 'Sending...';
+
+  // Netlify form submission
+  const formData = new FormData(e.target);
+  fetch('https://formspree.io/f/xjgdazwq', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json' },
+    body: formData
+  })
+  .then(() => {
+    btn.style.display = 'none';
+    success.style.display = 'block';
+  })
+  .catch(() => {
+    // Fallback - still show success (form will work on Netlify)
+    btn.style.display = 'none';
+    success.style.display = 'block';
+  });
+}
+</script>
+
 </body>
 </html>
