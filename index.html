@@ -681,14 +681,28 @@ function handleSubmit(e) {
 <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
 <script>
 (function() {
-  var target = document.getElementById('cal-button');
   window.addEventListener('load', function() {
-    calendar.schedulingButton.load({
-      url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ3muufKiy9y8fQo_6Hd9umagjvLZGr9a-YhyrdMR8hFG-s4_pO2vk1OmxwSMEMn_WJ2Mos3PNGg?gv=true',
-      color: '#1a4a2e',
-      label: 'Book a time with Rohan',
-      target,
-    });
+    var target = document.getElementById('cal-button');
+    if (target && window.calendar && window.calendar.schedulingButton) {
+      window.calendar.schedulingButton.load({
+        url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ3muufKiy9y8fQo_6Hd9umagjvLZGr9a-YhyrdMR8hFG-s4_pO2vk1OmxwSMEMn_WJ2Mos3PNGg?gv=true',
+        color: '#1a4a2e',
+        label: 'Book a time with Rohan',
+        target,
+      });
+    } else if (target) {
+      // Fallback: retry after script loads
+      setTimeout(function() {
+        if (window.calendar && window.calendar.schedulingButton) {
+          window.calendar.schedulingButton.load({
+            url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ3muufKiy9y8fQo_6Hd9umagjvLZGr9a-YhyrdMR8hFG-s4_pO2vk1OmxwSMEMn_WJ2Mos3PNGg?gv=true',
+            color: '#1a4a2e',
+            label: 'Book a time with Rohan',
+            target: document.getElementById('cal-button'),
+          });
+        }
+      }, 2000);
+    }
   });
 })();
 </script>
