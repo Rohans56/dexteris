@@ -1,0 +1,14 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/cyber-safety-program",
+      "destination": "/cyber-safety-program.html"
+    },
+    {
+      "source": "/leadership",
+      "destination": "/leadership.html"
+    }
+  ]
+}
